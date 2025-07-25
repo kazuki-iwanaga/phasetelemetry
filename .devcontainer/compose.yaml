@@ -1,0 +1,16 @@
+services:
+  devcontainer:
+    container_name: devcontainer
+    # platform: linux/x86_64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspace
+    working_dir: /workspace
+    environment:
+      - PYTHONPATH=/workspace
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+    init: true
+    command: sleep infinity
