@@ -46,7 +46,11 @@ jobs:
             phasetelemetry-tox-${{ matrix.python-version }}-
 
       # Run tests
-      - run: tox run -e py${{ replace(matrix.python-version, '.', '') }}
+      - run: |
+          tox_target_env=py${PYTHON_VERSION//./}
+          tox run -e $tox_target_env
+        env:
+          PYTHON_VERSION: ${{ matrix.python-version }}
 
       # Check formatting
       - run: |
