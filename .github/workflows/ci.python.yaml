@@ -19,45 +19,34 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    container:
-      image: python:3.11
+    strategy:
+      matrix:
+        python-version: [2.7, 3.11]
+    permissions:
+      contents: read
     env:
       PYTHONPATH: ${{ github.workspace }}/phasetelemetry
-      PIP_CACHE_DIR: ${{ github.workspace }}/.pip-cache
       TOX_WORK_DIR: ${{ github.workspace }}/.tox
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      # Install tox
-      - run: mkdir -p ${{ env.PIP_CACHE_DIR }}
-      - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+      - uses: actions/setup-python@v5
         with:
-          path: ${{ env.PIP_CACHE_DIR }}
-          key: phasetelemetry-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            phasetelemetry-pip-
-      - run: pip install -r requirements.txt
-
-      # Install python 2.7
-      - run: |
-          apt-get update
-          apt-get install -y --no-install-recommends python2.7 curl
-          ln -s /usr/bin/python2.7 /usr/local/bin/python2.7
-          curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py
-          python2.7 get-pip.py
-        working-directory: /tmp
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: requirements.txt
 
       # Setup tox
       - run: mkdir -p ${{ env.TOX_WORK_DIR }}
       - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
         with:
           path: ${{ env.TOX_WORK_DIR }}
-          key: phasetelemetry-tox-${{ hashFiles('tox.ini') }}
+          key: phasetelemetry-tox-${{ matrix.python-version }}-${{ hashFiles('tox.ini') }}
           restore-keys: |
-            phasetelemetry-tox-
+            phasetelemetry-tox-${{ matrix.python-version }}-
 
       # Run tests
-      - run: tox run-parallel
+      - run: tox run -e py${{ replace(matrix.python-version, '.', '') }}
 
       # Check formatting
       - run: |
