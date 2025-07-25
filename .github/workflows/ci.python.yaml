@@ -19,6 +19,8 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    container:
+      image: debian:bullseye
     strategy:
       matrix:
         python-version: [2.7, 3.11]
