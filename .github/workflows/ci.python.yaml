@@ -40,9 +40,9 @@ jobs:
 
       # Install python 2.7
       - run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends python2.7 curl
-          sudo ln -s /usr/bin/python2.7 /usr/local/bin/python2.7
+          apt-get update
+          apt-get install -y --no-install-recommends python2.7 curl
+          ln -s /usr/bin/python2.7 /usr/local/bin/python2.7
           curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py
           python2.7 get-pip.py
         working-directory: /tmp
