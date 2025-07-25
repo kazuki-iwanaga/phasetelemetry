@@ -1,0 +1,3 @@
+# Install old tox and virtualenv to use python 2.7 on tox.
+tox==3.28.0
+virtualenv==20.15.1

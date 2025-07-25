@@ -1,0 +1,53 @@
+name: ci.python
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'phasetelemetry/**'
+      - 'tests/**'
+      - '.github/workflows/ci.python.yaml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'phasetelemetry/**'
+      - 'tests/**'
+      - '.github/workflows/ci.python.yaml'
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [2.7, 3.11]
+      fail-fast: false
+    container:
+      image: python:${{ matrix.python-version }}
+    permissions:
+      contents: read
+    env:
+      PYTHONPATH: ${{ github.workspace }}/phasetelemetry
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      # Setup tox
+      - run: pip install -r requirements.txt
+
+      # Run tests
+      - run: |
+          tox_target_env=py${PYTHON_VERSION//./}
+          tox run -e $tox_target_env
+        shell: bash
+        env:
+          PYTHON_VERSION: ${{ matrix.python-version }}
+
+      # Check formatting
+      - if: ${{ matrix.python-version == '2.7' }}
+        run: |
+          tox -e format
+          if ! git diff --exit-code; then
+            echo "Not formatted."
+            exit 1
+          fi
