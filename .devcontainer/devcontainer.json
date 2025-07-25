@@ -1,6 +1,6 @@
 {
     "name": "phasetelemetry.devcontainer",
-    "dockerComposeFile": "compose.yaml",
+    "dockerComposeFile": "../compose.yaml",
     "service": "devcontainer",
     "workspaceFolder": "/workspace",
     "customizations": {
