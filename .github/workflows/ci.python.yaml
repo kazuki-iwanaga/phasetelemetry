@@ -1,0 +1,59 @@
+name: ci.python
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'phasetelemetry/**'
+      - 'tests/**'
+      - '.github/workflows/ci.python.yaml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'phasetelemetry/**'
+      - 'tests/**'
+      - '.github/workflows/ci.python.yaml'
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.11
+    env:
+      PYTHONPATH: ${{ github.workspace }}/phasetelemetry
+      PIP_CACHE_DIR: ${{ github.workspace }}/.pip-cache
+      TOX_WORK_DIR: ${{ github.workspace }}/.tox
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      # Install tox
+      - run: mkdir -p ${{ env.PIP_CACHE_DIR }}
+      - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: ${{ env.PIP_CACHE_DIR }}
+          key: phasetelemetry-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            phasetelemetry-pip-
+      - run: pip install -r requirements.txt
+
+      # Setup tox
+      - run: mkdir -p ${{ env.TOX_WORK_DIR }}
+      - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: ${{ env.TOX_WORK_DIR }}
+          key: phasetelemetry-tox-${{ hashFiles('tox.ini') }}
+          restore-keys: |
+            phasetelemetry-tox-
+
+      # Run tests
+      - run: tox run-parallel
+
+      # Check formatting
+      - run: |
+          tox -e format
+          if ! git diff --exit-code; then
+            echo "Not formatted."
+            exit 1
+          fi
