@@ -5,12 +5,23 @@ from phasetelemetry.api.logs import LogRecord
 
 
 class LogExporter(object):
+    """Interface for log exporters that send log records to external systems."""
     __metaclass__ = ABCMeta
 
     @abstractmethod
     def export(self, records):  # type: (List[LogRecord]) -> bool
+        """Export a list of log records to an external system.
+
+        Args:
+            records (List[LogRecord]): The log records to export.
+        Returns:
+            bool: True if export was successful, False otherwise.
+        """
         pass
 
     @abstractmethod
     def shutdown(self):  # type: () -> None
+        """Shutdown the log exporter.
+        Clean up all resources such as network connections or file handles.
+        """
         pass
