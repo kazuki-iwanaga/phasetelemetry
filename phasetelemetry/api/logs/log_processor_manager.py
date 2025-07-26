@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
-from phasetelemetry.api.logs import LogProcessor, LogRecord
+from phasetelemetry.api.logs.log_processor import LogProcessor
+from phasetelemetry.api.logs.log_record import LogRecord
 
 
 class LogProcessorManager(object):

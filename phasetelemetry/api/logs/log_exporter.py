@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from typing import List
 
-from phasetelemetry.api.logs import LogRecord
+from phasetelemetry.api.logs.log_record import LogRecord
 
 
 class LogExporter(object):
