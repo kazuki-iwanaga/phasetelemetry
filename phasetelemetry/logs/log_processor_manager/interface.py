@@ -1,19 +1,20 @@
 from abc import ABCMeta, abstractmethod
 
-from phasetelemetry.api.logs.log_processor import LogProcessor
-from phasetelemetry.api.logs.log_record import LogRecord
+from phasetelemetry.logs.log_processor.interface import LogProcessorInterface
+from phasetelemetry.logs.log_record.interface import LogRecordInterface
 
 
-class LogProcessorManager(object):
+class LogProcessorManagerInterface(object):
     """Interface for LogProcessorManager that manages multiple LogProcessors."""
     __metadata__ = ABCMeta
 
     @abstractmethod
-    def add_processor(self, processor):  # type: (LogProcessor) -> None
+    def add_processor(self,
+                      processor):  # type: (LogProcessorInterface) -> None
         """Register a LogProcessor to this manager.
 
         Args:
-            processor (LogProcessor): The log processor to register.
+            processor (LogProcessorInterface): The log processor to register.
         
         Returns:
             None
@@ -21,12 +22,12 @@ class LogProcessorManager(object):
         pass
 
     @abstractmethod
-    def on_emit(self, record):  # type: (LogRecord) -> None
+    def on_emit(self, record):  # type: (LogRecordInterface) -> None
         """Called when `Logger.emit` is invoked.
         The LogProcessorManager passes the log record to all registered processors.
 
         Args:
-            record (LogRecord): The log record to process.
+            record (LogRecordInterface): The log record to process.
 
         Returns:
             None

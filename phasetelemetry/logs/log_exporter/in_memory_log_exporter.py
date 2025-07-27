@@ -1,10 +1,11 @@
 import threading
 from typing import List
 
-from phasetelemetry.api.logs import LogExporter, LogRecord
+from phasetelemetry.logs.log_exporter.interface import LogExporterInterface
+from phasetelemetry.logs.log_record.interface import LogRecordInterface
 
 
-class InMemoryLogExporter(LogExporter):
+class InMemoryLogExporter(LogExporterInterface):
     """Exports log records to in-memory list."""
 
     def __init__(self):  # type: () -> None
@@ -12,11 +13,11 @@ class InMemoryLogExporter(LogExporter):
         self._lock = threading.Lock()
         self._is_active = True  # Set false after shutdown() called
 
-    def export(self, records):  # type: (List[LogRecord]) -> bool
+    def export(self, records):  # type: (List[LogRecordInterface]) -> bool
         """Exports log records to in-memory list while this exporter is active.
 
         Args:
-            records (List[LogRecord]): The log records to export.
+            records (List[LogRecordInterface]): The log records to export.
         
         Returns:
             bool: True if export was successful, False otherwise.

@@ -1,19 +1,19 @@
 from abc import ABCMeta, abstractmethod
 
-from phasetelemetry.api.logs.log_record import LogRecord
+from phasetelemetry.logs.log_record.interface import LogRecordInterface
 
 
-class LogProcessor(object):
+class LogProcessorInterface(object):
     """Interface for log processors that buffer and export log records."""
     ___metaclass__ = ABCMeta
 
     @abstractmethod
-    def on_emit(self, record):  # type: (LogRecord) -> None
+    def on_emit(self, record):  # type: (LogRecordInterface) -> None
         """This method is called when `Logger.emit` is invoked.
         The LogProcessor handles the log record (e.g., buffering).
 
         Args:
-            record (LogRecord): The log record to process.
+            record (LogRecordInterface): The log record to process.
 
         Returns:
             None
@@ -28,6 +28,6 @@ class LogProcessor(object):
     @abstractmethod
     def shutdown(self):  # type: () -> None
         """Shutdown the log processor.
-        Mainly called when `LogProcessorManager.shutdown` is invoked.
+        Mainly called when `LogProcessorManagerInterface.shutdown` is invoked.
         """
         pass

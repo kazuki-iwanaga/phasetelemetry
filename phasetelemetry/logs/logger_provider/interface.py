@@ -1,15 +1,15 @@
 from abc import ABCMeta, abstractmethod
 
-from phasetelemetry.api.logs.log_processor import LogProcessor
-from phasetelemetry.api.logs.logger import Logger
+from phasetelemetry.logs.log_processor.interface import LogProcessorInterface
+from phasetelemetry.logs.logger.interface import LoggerInterface
 
 
-class LoggerProvider(object):
+class LoggerProviderInterface(object):
     """Interface for logger providers, responsible for creating loggers."""
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def get_logger(self, name):  # type: (str) -> Logger
+    def get_logger(self, name):  # type: (str) -> LoggerInterface
         """Get or create a logger with the given name.
         Returns an existing logger if it already exists.
 
@@ -17,16 +17,17 @@ class LoggerProvider(object):
             name (str): The name of the logger.
         
         Returns:
-            Logger: An instance of a logger.
+            LoggerInterface: An instance of a logger.
         """
         pass
 
     @abstractmethod
-    def add_processor(self, processor):  # type: (LogProcessor) -> None
+    def add_processor(self,
+                      processor):  # type: (LogProcessorInterface) -> None
         """Add a log processor to the provider.
 
         Args:
-            processor (LogProcessor): The log processor to add.
+            processor (LogProcessorInterface): The log processor to add.
 
         Returns:
             None

@@ -1,10 +1,10 @@
-from phasetelemetry.api.logs.log_record import LogRecord
-from phasetelemetry.sdk.logs.log_exporter.in_memory_log_exporter import InMemoryLogExporter
+from phasetelemetry.logs.log_exporter.in_memory_log_exporter import InMemoryLogExporter
+from phasetelemetry.logs.log_record.interface import LogRecordInterface
 
 
 class TestInMemoryLogExporter:
 
-    class MockLogRecord(LogRecord):
+    class MockLogRecord(LogRecordInterface):
 
         def __init__(self, message):
             self._message = message

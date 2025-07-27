@@ -1,7 +1,7 @@
-from phasetelemetry.api.logs import LogRecord
+from phasetelemetry.logs.log_record.interface import LogRecordInterface
 
 
-class RawLogRecord(LogRecord):
+class RawLogRecord(LogRecordInterface):
     """Simple implementation of LogRecord."""
 
     def __init__(self, message):  # type: (str) -> None

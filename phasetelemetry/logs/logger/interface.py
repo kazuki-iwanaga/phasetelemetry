@@ -1,18 +1,18 @@
 from abc import ABCMeta, abstractmethod
 
-from phasetelemetry.api.logs.log_record import LogRecord
+from phasetelemetry.logs.log_record.interface import LogRecordInterface
 
 
-class Logger(object):
+class LoggerInterface(object):
     """Interface for loggers."""
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def emit(self, record):  # type: (LogRecord) -> None
+    def emit(self, record):  # type: (LogRecordInterface) -> None
         """Emit a log record.
 
         Args:
-            record (LogRecord): The log record to emit.
+            record (LogRecordInterface): The log record to emit.
         
         Returns:
             None
