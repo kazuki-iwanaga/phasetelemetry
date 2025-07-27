@@ -13,4 +13,4 @@ class RawLogRecord(LogRecordInterface):
         Returns:
             None
         """
-        self.message = message
+        self._message = message
