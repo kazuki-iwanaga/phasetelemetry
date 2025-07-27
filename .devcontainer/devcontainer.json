@@ -11,7 +11,12 @@
             "settings": {
                 "python.defaultInterpreterPath": "/usr/local/bin/python2.7",
                 "terminal.integrated.defaultProfile.linux": "bash",
-                "remote.autoForwardPorts": false
+                "remote.autoForwardPorts": false,
+                "remote.portsAttributes": {
+                    "*": {
+                        "onAutoForward": "ignore"
+                    }
+                }
             }
         }
     }
