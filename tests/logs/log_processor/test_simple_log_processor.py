@@ -1,6 +1,6 @@
-from phasetelemetry.logs.log_exporter.noop_log_exporter import NoOpLogExporter
+from phasetelemetry.logs.log_exporter.interface import LogExporterInterface
 from phasetelemetry.logs.log_processor.simple_log_processor import SimpleLogProcessor
-from phasetelemetry.logs.log_record.noop_log_record import NoOpLogRecord
+from phasetelemetry.logs.log_record.interface import LogRecordInterface
 
 
 class TestSimpleLogProcessor:
@@ -9,12 +9,12 @@ class TestSimpleLogProcessor:
         """Should export records immediately after on_emit() is called."""
 
         # Arrange
-        exporter = NoOpLogExporter()
-        mocker.spy(exporter, 'export')
+        exporter = mocker.Mock(spec=LogExporterInterface)
+        exporter.export.return_value = True
         processor = SimpleLogProcessor(exporter)
 
         # Act
-        record = NoOpLogRecord()
+        record = mocker.Mock(spec=LogRecordInterface)
         processor.on_emit(record)
 
         # Assert
@@ -24,8 +24,7 @@ class TestSimpleLogProcessor:
         """Should call shutdown on the exporter when shutdown is called."""
 
         # Arrange
-        exporter = NoOpLogExporter()
-        mocker.spy(exporter, 'shutdown')
+        exporter = mocker.Mock(spec=LogExporterInterface)
         processor = SimpleLogProcessor(exporter)
 
         # Act

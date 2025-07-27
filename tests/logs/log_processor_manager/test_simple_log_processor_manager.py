@@ -1,18 +1,21 @@
-from phasetelemetry.logs.log_processor.noop_log_processor import NoOpLogProcessor
+from phasetelemetry.logs.log_processor.interface import LogProcessorInterface
 from phasetelemetry.logs.log_processor_manager.simple_log_processor_manager import SimpleLogProcessorManager
-from phasetelemetry.logs.log_record.noop_log_record import NoOpLogRecord
+from phasetelemetry.logs.log_record.interface import LogRecordInterface
 
 
 class TestSimpleLogProcessorManager:
 
-    def test_add_processor(self):
+    def test_add_processor(self, mocker):
         """add_processor should append the processor to the internal list."""
         # Arrange
         manager = SimpleLogProcessorManager()
-        manager._processors = [NoOpLogProcessor() for _ in range(2)]
+        # NOTE: Set already registered processors to test extending list.
+        manager._processors = [
+            mocker.Mock(spec=LogProcessorInterface) for _ in range(2)
+        ]
 
         # Act
-        processor = NoOpLogProcessor()
+        processor = mocker.Mock(spec=LogProcessorInterface)
         manager.add_processor(processor)
 
         # Assert
@@ -24,12 +27,11 @@ class TestSimpleLogProcessorManager:
         # Arrange
         manager = SimpleLogProcessorManager()
         for _ in range(2):
-            processor = NoOpLogProcessor()
-            mocker.spy(processor, 'on_emit')
+            processor = mocker.Mock(spec=LogProcessorInterface)
             manager.add_processor(processor)
 
         # Act
-        record = NoOpLogRecord()
+        record = mocker.Mock(spec=LogRecordInterface)
         manager.on_emit(record)
 
         # Assert
@@ -41,8 +43,7 @@ class TestSimpleLogProcessorManager:
         # Arrange
         manager = SimpleLogProcessorManager()
         for _ in range(2):
-            processor = NoOpLogProcessor()
-            mocker.spy(processor, 'force_flush')
+            processor = mocker.Mock(spec=LogProcessorInterface)
             manager.add_processor(processor)
 
         # Act

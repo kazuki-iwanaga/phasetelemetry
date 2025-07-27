@@ -1,3 +1,5 @@
+from phasetelemetry.logs.log_processor.interface import LogProcessorInterface
+from phasetelemetry.logs.log_processor_manager.interface import LogProcessorManagerInterface
 from phasetelemetry.logs.log_processor_manager.simple_log_processor_manager import SimpleLogProcessorManager
 from phasetelemetry.logs.logger.interface import LoggerInterface
 from phasetelemetry.logs.logger_provider.logger_provider import LoggerProvider
@@ -8,11 +10,11 @@ class TestLoggerProvider:
     def test_get_logger_no_cache(self, mocker):
         """Should create a new logger when no cache exists."""
         # Arrange
-        manager = mocker.Mock()
+        manager = mocker.Mock(spec=LogProcessorManagerInterface)
         provider = LoggerProvider(manager)
-        logger_name = "test_logger"
 
         # Act
+        logger_name = "test_logger"
         logger = provider.get_logger(logger_name)
 
         # Assert
@@ -22,11 +24,11 @@ class TestLoggerProvider:
     def test_get_logger_with_cache(self, mocker):
         """Should return the same logger instance when called with the same name."""
         # Arrange
-        manager = mocker.Mock()
+        manager = mocker.Mock(spec=LogProcessorManagerInterface)
         provider = LoggerProvider(manager)
-        logger_name = "test_logger"
 
         # Act
+        logger_name = "test_logger"
         logger1 = provider.get_logger(logger_name)
         logger2 = provider.get_logger(logger_name)
 
@@ -49,11 +51,11 @@ class TestLoggerProvider:
     def test_add_processor(self, mocker):
         """Should call LogProcessorManager's add_processor."""
         # Arrange
-        manager = mocker.Mock()
+        manager = mocker.Mock(spec=LogProcessorManagerInterface)
         provider = LoggerProvider(manager)
-        processor = mocker.Mock()
 
         # Act
+        processor = mocker.Mock(spec=LogProcessorInterface)
         provider.add_processor(processor)
 
         # Assert
@@ -62,7 +64,7 @@ class TestLoggerProvider:
     def test_force_flush(self, mocker):
         """Should call LogProcessorManager's force_flush."""
         # Arrange
-        manager = mocker.Mock()
+        manager = mocker.Mock(spec=LogProcessorManagerInterface)
         provider = LoggerProvider(manager)
 
         # Act
@@ -74,7 +76,7 @@ class TestLoggerProvider:
     def test_shutdown(self, mocker):
         """Should call LogProcessorManager's shutdown."""
         # Arrange
-        manager = mocker.Mock()
+        manager = mocker.Mock(spec=LogProcessorManagerInterface)
         provider = LoggerProvider(manager)
 
         # Act
