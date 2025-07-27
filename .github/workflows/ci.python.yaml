@@ -38,6 +38,7 @@ jobs:
       # Run tests
       - run: |
           tox_target_env=py${PYTHON_VERSION//./}
+          echo "tox_target_env=$tox_target_env"
           tox run -e $tox_target_env
         shell: bash
         env:
