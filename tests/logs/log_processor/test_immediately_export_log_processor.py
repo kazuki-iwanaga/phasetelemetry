@@ -16,6 +16,8 @@ class TestPassthroughLogProcessor:
         pass
 
     def test_on_emit(self, mocker):
+        """Should export records immediately after on_emit() is called."""
+
         # Arrange
         exporter = self.MockLogExporter()
         mocker.spy(exporter, 'export')
@@ -29,6 +31,8 @@ class TestPassthroughLogProcessor:
         exporter.export.assert_called_once_with([record])
 
     def test_shutdown(self, mocker):
+        """Should call shutdown on the exporter when shutdown is called."""
+
         # Arrange
         exporter = self.MockLogExporter()
         mocker.spy(exporter, 'shutdown')

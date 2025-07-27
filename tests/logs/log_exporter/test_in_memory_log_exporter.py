@@ -8,6 +8,8 @@ class TestInMemoryLogExporter:
         pass
 
     def test_export(self):
+        """Exported records should be stored in memory list."""
+
         # Arrange
         exporter = InMemoryLogExporter()
         # NOTE: Set already exported records to test extending list.
@@ -22,6 +24,8 @@ class TestInMemoryLogExporter:
         assert len(exporter._exported) == 5
 
     def test_shutdown(self):
+        """After shutdown is called, no records should be exported."""
+
         # Arrange
         exporter = InMemoryLogExporter()
 
