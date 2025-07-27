@@ -1,30 +1,20 @@
-from phasetelemetry.logs.log_exporter.interface import LogExporterInterface
+from phasetelemetry.logs.log_exporter.noop_log_exporter import NoOpLogExporter
 from phasetelemetry.logs.log_processor.passthrough_log_processor import PassthroughLogProcessor
+from phasetelemetry.logs.log_record.noop_log_record import NoOpLogRecord
 
 
 class TestPassthroughLogProcessor:
-
-    class MockLogExporter(LogExporterInterface):
-
-        def export(self, _):
-            pass
-
-        def shutdown(self):
-            pass
-
-    class MockLogRecord:
-        pass
 
     def test_on_emit(self, mocker):
         """Should export records immediately after on_emit() is called."""
 
         # Arrange
-        exporter = self.MockLogExporter()
+        exporter = NoOpLogExporter()
         mocker.spy(exporter, 'export')
         processor = PassthroughLogProcessor(exporter)
 
         # Act
-        record = self.MockLogRecord()
+        record = NoOpLogRecord()
         processor.on_emit(record)
 
         # Assert
@@ -34,7 +24,7 @@ class TestPassthroughLogProcessor:
         """Should call shutdown on the exporter when shutdown is called."""
 
         # Arrange
-        exporter = self.MockLogExporter()
+        exporter = NoOpLogExporter()
         mocker.spy(exporter, 'shutdown')
         processor = PassthroughLogProcessor(exporter)
 

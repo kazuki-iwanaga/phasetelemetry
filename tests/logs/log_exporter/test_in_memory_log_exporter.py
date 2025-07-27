@@ -1,11 +1,8 @@
 from phasetelemetry.logs.log_exporter.in_memory_log_exporter import InMemoryLogExporter
-from phasetelemetry.logs.log_record.interface import LogRecordInterface
+from phasetelemetry.logs.log_record.noop_log_record import NoOpLogRecord
 
 
 class TestInMemoryLogExporter:
-
-    class MockLogRecord(LogRecordInterface):
-        pass
 
     def test_export(self):
         """Exported records should be stored in memory list."""
@@ -13,10 +10,10 @@ class TestInMemoryLogExporter:
         # Arrange
         exporter = InMemoryLogExporter()
         # NOTE: Set already exported records to test extending list.
-        exporter._exported = [self.MockLogRecord() for _ in range(2)]
+        exporter._exported = [NoOpLogRecord for _ in range(2)]
 
         # Act
-        records = [self.MockLogRecord() for _ in range(3)]
+        records = [NoOpLogRecord for _ in range(3)]
         result = exporter.export(records)
 
         # Assert
@@ -33,7 +30,7 @@ class TestInMemoryLogExporter:
         # Act
         exporter.shutdown()
 
-        records = [self.MockLogRecord() for _ in range(3)]
+        records = [NoOpLogRecord for _ in range(3)]
         result = exporter.export(records)
 
         # Assert
