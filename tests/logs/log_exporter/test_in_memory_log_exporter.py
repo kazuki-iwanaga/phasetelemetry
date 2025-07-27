@@ -22,6 +22,7 @@ class TestInMemoryLogExporter:
         # Assert
         assert result is True
         assert len(exporter._exported) == 5
+        assert exporter._exported[-3:] == records
 
     def test_shutdown(self):
         """After shutdown is called, no records should be exported."""
