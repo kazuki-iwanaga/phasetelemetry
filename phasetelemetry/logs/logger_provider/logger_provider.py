@@ -13,7 +13,7 @@ class LoggerProvider(LoggerProviderInterface):
 
     def __init__(
         self,
-        manager,
+        manager=None,
     ):  # type: (LogProcessorManagerInterface) -> None
         """Initialize the logger provider with a log processor manager.
 

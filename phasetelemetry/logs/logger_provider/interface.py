@@ -22,8 +22,10 @@ class LoggerProviderInterface(object):
         pass
 
     @abstractmethod
-    def add_processor(self,
-                      processor):  # type: (LogProcessorInterface) -> None
+    def add_processor(
+        self,
+        processor=None,
+    ):  # type: (LogProcessorInterface) -> None
         """Add a log processor to the provider.
 
         Args:
