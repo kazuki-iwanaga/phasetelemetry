@@ -1,4 +1,3 @@
-from phasetelemetry.logs.log_exporter.noop_log_exporter import NoOpLogExporter
 from phasetelemetry.logs.log_processor.noop_log_processor import NoOpLogProcessor
 from phasetelemetry.logs.log_processor_manager.simple_log_processor_manager import SimpleLogProcessorManager
 from phasetelemetry.logs.log_record.noop_log_record import NoOpLogRecord
