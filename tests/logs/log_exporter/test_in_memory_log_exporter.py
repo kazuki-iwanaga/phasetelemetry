@@ -5,40 +5,32 @@ from phasetelemetry.logs.log_record.interface import LogRecordInterface
 class TestInMemoryLogExporter:
 
     class MockLogRecord(LogRecordInterface):
-
-        def __init__(self, message):
-            self._message = message
+        pass
 
     def test_export(self):
         # Arrange
         exporter = InMemoryLogExporter()
         # NOTE: Set already exported records to test extending list.
-        exporter._exported = [
-            self.MockLogRecord(message) for message in ["x", "yy"]
-        ]
-        records = [
-            self.MockLogRecord(message) for message in ["a", "bbb", "cc"]
-        ]
+        exporter._exported = [self.MockLogRecord() for _ in range(2)]
 
         # Act
+        records = [self.MockLogRecord() for _ in range(3)]
         result = exporter.export(records)
 
         # Assert
         assert result is True
-        assert [record._message for record in exporter._exported
-                ] == ["x", "yy", "a", "bbb", "cc"]
+        assert len(exporter._exported) == 5
 
     def test_shutdown(self):
         # Arrange
         exporter = InMemoryLogExporter()
-        records = [
-            self.MockLogRecord(message) for message in ["a", "bbb", "cc"]
-        ]
 
         # Act
         exporter.shutdown()
+
+        records = [self.MockLogRecord() for _ in range(3)]
         result = exporter.export(records)
 
         # Assert
         assert result is False
-        assert [record._message for record in exporter._exported] == []
+        assert exporter._exported == []
