@@ -28,7 +28,7 @@ jobs:
     permissions:
       contents: read
     env:
-      PYTHONPATH: ${{ github.workspace }}/phasetelemetry
+      PYTHONPATH: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
@@ -38,6 +38,7 @@ jobs:
       # Run tests
       - run: |
           tox_target_env=py${PYTHON_VERSION//./}
+          echo "tox_target_env=$tox_target_env"
           tox run -e $tox_target_env
         shell: bash
         env:
