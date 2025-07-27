@@ -1,8 +1,8 @@
 from phasetelemetry.logs.log_exporter.interface import LogExporterInterface
-from phasetelemetry.logs.log_processor.immediately_export_log_processor import ImmediatelyExportLogProcessor
+from phasetelemetry.logs.log_processor.immediate_export_log_processor import ImmediateExportLogProcessor
 
 
-class TestImmediatelyExportLogProcessor:
+class TestImmediateExportLogProcessor:
 
     class MockLogExporter(LogExporterInterface):
 
@@ -19,7 +19,7 @@ class TestImmediatelyExportLogProcessor:
         # Arrange
         exporter = self.MockLogExporter()
         mocker.spy(exporter, 'export')
-        processor = ImmediatelyExportLogProcessor(exporter)
+        processor = ImmediateExportLogProcessor(exporter)
 
         # Act
         record = self.MockLogRecord()
@@ -32,7 +32,7 @@ class TestImmediatelyExportLogProcessor:
         # Arrange
         exporter = self.MockLogExporter()
         mocker.spy(exporter, 'shutdown')
-        processor = ImmediatelyExportLogProcessor(exporter)
+        processor = ImmediateExportLogProcessor(exporter)
 
         # Act
         processor.shutdown()
