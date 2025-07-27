@@ -5,7 +5,7 @@
     <picture>
         <source media="(prefers-color-scheme: dark)" srcset="./docs/phasetelemetry-logo-darkmode.svg">
         <source media="(prefers-color-scheme: light)" srcset="./docs/phasetelemetry-logo-whitemode.svg">
-        <img alt="phasetelemetry-logo" src="./docs/phasetelemetry-logo-whitemode.svg" width="360">
+        <img alt="phasetelemetry-logo" src="./docs/phasetelemetry-logo-whitemode.svg" width="240">
     </picture>
 </div>
 
