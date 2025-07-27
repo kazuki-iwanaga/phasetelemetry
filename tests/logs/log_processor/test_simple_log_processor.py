@@ -1,9 +1,9 @@
 from phasetelemetry.logs.log_exporter.noop_log_exporter import NoOpLogExporter
-from phasetelemetry.logs.log_processor.passthrough_log_processor import PassthroughLogProcessor
+from phasetelemetry.logs.log_processor.simple_log_processor import SimpleLogProcessor
 from phasetelemetry.logs.log_record.noop_log_record import NoOpLogRecord
 
 
-class TestPassthroughLogProcessor:
+class TestSimpleLogProcessor:
 
     def test_on_emit(self, mocker):
         """Should export records immediately after on_emit() is called."""
@@ -11,7 +11,7 @@ class TestPassthroughLogProcessor:
         # Arrange
         exporter = NoOpLogExporter()
         mocker.spy(exporter, 'export')
-        processor = PassthroughLogProcessor(exporter)
+        processor = SimpleLogProcessor(exporter)
 
         # Act
         record = NoOpLogRecord()
@@ -26,7 +26,7 @@ class TestPassthroughLogProcessor:
         # Arrange
         exporter = NoOpLogExporter()
         mocker.spy(exporter, 'shutdown')
-        processor = PassthroughLogProcessor(exporter)
+        processor = SimpleLogProcessor(exporter)
 
         # Act
         processor.shutdown()
