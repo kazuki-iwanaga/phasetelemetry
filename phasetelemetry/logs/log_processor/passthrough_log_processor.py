@@ -3,11 +3,11 @@ from phasetelemetry.logs.log_processor.interface import LogProcessorInterface
 from phasetelemetry.logs.log_record.interface import LogRecordInterface
 
 
-class ImmediateExportLogProcessor(LogProcessorInterface):
-    """LogProcessorInterface implementation that immediately exports log records."""
+class PassthroughLogProcessor(LogProcessorInterface):
+    """LogProcessorInterface implementation that exports log records immediately."""
 
     def __init__(self, exporter):  # type: (LogExporterInterface) -> None
-        """Initialize ImmediateExportLogProcessor.
+        """Initialize PassthroughLogProcessor.
 
         Args:
             exporter (LogExporterInterface): LogExporter to export log records.
