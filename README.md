@@ -1,6 +1,14 @@
 > [!WARNING]
 > Currently under development.
 
+<div align="center">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="./docs/phasetelemetry-logo-darkmode.svg">
+        <source media="(prefers-color-scheme: light)" srcset="./docs/phasetelemetry-logo-whitemode.svg">
+        <img alt="phasetelemetry-logo" src="./docs/phasetelemetry-logo-whitemode.svg" width="360">
+    </picture>
+</div>
+
 # PhaseTelemetry
 
 PhaseTelemetry is an instrumentation library compatible with both Python 2.7 and 3.x. Please note that our implementation is heavily influenced by the OpenTelemetry Python SDK and therefore inherits its Apache 2.0 license.
